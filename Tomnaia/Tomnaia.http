@@ -1,0 +1,6 @@
+@Tomnaia_HostAddress = http://localhost:5132
+
+GET {{Tomnaia_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
