@@ -48,6 +48,33 @@ namespace Tomnaia.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
 
+
+
+            modelBuilder.Entity<User>()
+                .HasMany(c => c.SentRates)
+                .WithOne(u => u.Rater)
+                .HasForeignKey(c => c.RaterId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasMany(c => c.ReceivedRates)
+                .WithOne(u => u.Rated)
+                .HasForeignKey(c => c.RatedId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Rate>()
+                .HasOne(c => c.Rater)
+                .WithMany(u => u.SentRates)
+                .HasForeignKey(c => c.RaterId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Rate>()
+                .HasOne(c => c.Rated)
+                .WithMany(u => u.ReceivedRates)
+                .HasForeignKey(c => c.RatedId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
             SeedRoles(modelBuilder);
 
         }
