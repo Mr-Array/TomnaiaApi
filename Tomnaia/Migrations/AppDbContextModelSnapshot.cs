@@ -195,7 +195,7 @@ namespace Tomnaia.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Message", b =>
@@ -224,7 +224,7 @@ namespace Tomnaia.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Notification", b =>
@@ -247,7 +247,7 @@ namespace Tomnaia.Migrations
 
                     b.HasIndex("ReceiverId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Rate", b =>
@@ -272,7 +272,7 @@ namespace Tomnaia.Migrations
 
                     b.HasIndex("RaterId");
 
-                    b.ToTable("Rates");
+                    b.ToTable("Rate", (string)null);
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Ride", b =>
@@ -299,7 +299,7 @@ namespace Tomnaia.Migrations
 
                     b.HasKey("RideId");
 
-                    b.ToTable("Rides");
+                    b.ToTable("Rides", (string)null);
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.User", b =>
@@ -427,7 +427,7 @@ namespace Tomnaia.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("vehicles");
+                    b.ToTable("vehicles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
