@@ -12,14 +12,21 @@ namespace Tomnaia.GenericRepository_UOW
         private IDbContextTransaction transaction;
 
         private readonly AppDbContext _context;
-        public virtual IGenericRepository<User> User { get; set; }
-      
+        public IGenericRepository<User> User { get; set; }
+        public IGenericRepository<Comment> Comment { get ; set ; }
+        public IGenericRepository<Rate> Rate { get ; set; }
+        public IGenericRepository<Message> Message { get; set ; }
+        public IGenericRepository<Notification> Notification { get ; set ; }
 
         public UnitOfWork(AppDbContext context)
         {
             _context = context;
             User = new GenericRepository<User>(_context);
-           
+            Comment = new GenericRepository<Comment>(_context);
+            Rate = new GenericRepository<Rate>(_context);
+            Message = new GenericRepository<Message>(_context);
+            Notification = new GenericRepository<Notification>(_context);
+
         }
 
         public async Task CreateTransactionAsync()
