@@ -12,7 +12,7 @@ using Tomnaia.Data;
 namespace Tomnaia.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240522060924_init")]
+    [Migration("20240522120806_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -50,6 +50,26 @@ namespace Tomnaia.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Name = "Passenger",
+                            NormalizedName = "Passenger"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Name = "Driver",
+                            NormalizedName = "Driver"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

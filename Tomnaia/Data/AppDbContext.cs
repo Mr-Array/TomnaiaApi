@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using System.Net.Mail;
@@ -17,9 +18,7 @@ namespace Tomnaia.Data
         {
             base.OnModelCreating(modelBuilder);
 
-
             
-
             SeedRoles(modelBuilder);
 
         }
