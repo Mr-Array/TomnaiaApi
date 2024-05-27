@@ -7,7 +7,10 @@ namespace Tomnaia.IGenericRepository
     public interface IUnitOfWork
     {
         IGenericRepository<User> User { get; set; }
-      
+        IGenericRepository<Comment> Comment { get; set; }
+        IGenericRepository<Rate> Rate { get; set; }
+        IGenericRepository<Message> Message { get; set; }
+        IGenericRepository<Notification> Notification { get; set; }
 
         // Synchronous transaction methods
 

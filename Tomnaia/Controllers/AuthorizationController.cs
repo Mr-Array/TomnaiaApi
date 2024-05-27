@@ -23,7 +23,7 @@ namespace Tomnaia.Controllers
 
         #region registration
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterAsync(RegisterUser user)
+        public async Task<ActionResult> RegisterAsync([FromBody] RegisterUser user)
         {
             if (!ModelState.IsValid)
             {
