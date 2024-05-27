@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tomnaia.Data;
 
@@ -11,9 +12,11 @@ using Tomnaia.Data;
 namespace Tomnaia.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240523205151_initt")]
+    partial class initt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,58 +253,6 @@ namespace Tomnaia.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.Rate", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<double>("RateValue")
-                        .HasColumnType("float");
-
-                    b.Property<string>("RatedId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RaterId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RatedId");
-
-                    b.HasIndex("RaterId");
-
-                    b.ToTable("Rates");
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.Ride", b =>
-                {
-                    b.Property<int>("RideId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RideId"));
-
-                    b.Property<string>("DropoffLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PickupLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RequestTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RideId");
-
-                    b.ToTable("Rides");
-                });
-
             modelBuilder.Entity("Tomnaia.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -378,58 +329,6 @@ namespace Tomnaia.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.Vehicle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Available")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DriverId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhotoVehicle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Photolicense")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Year")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("licensestatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DriverId");
-
-                    b.ToTable("vehicles");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -484,9 +383,9 @@ namespace Tomnaia.Migrations
             modelBuilder.Entity("Tomnaia.Entities.Comment", b =>
                 {
                     b.HasOne("Tomnaia.Entities.User", "User")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -495,15 +394,15 @@ namespace Tomnaia.Migrations
             modelBuilder.Entity("Tomnaia.Entities.Message", b =>
                 {
                     b.HasOne("Tomnaia.Entities.User", "Receiver")
-                        .WithMany("ReceivedMessages")
+                        .WithMany()
                         .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Tomnaia.Entities.User", "Sender")
-                        .WithMany("SentMessages")
+                        .WithMany()
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Receiver");
@@ -514,57 +413,12 @@ namespace Tomnaia.Migrations
             modelBuilder.Entity("Tomnaia.Entities.Notification", b =>
                 {
                     b.HasOne("Tomnaia.Entities.User", "Receiver")
-                        .WithMany("Notifications")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Receiver");
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.Rate", b =>
-                {
-                    b.HasOne("Tomnaia.Entities.User", "Rated")
-                        .WithMany("ReceivedRates")
-                        .HasForeignKey("RatedId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Tomnaia.Entities.User", "Rater")
-                        .WithMany("SentRates")
-                        .HasForeignKey("RaterId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Rated");
-
-                    b.Navigation("Rater");
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.Vehicle", b =>
-                {
-                    b.HasOne("Tomnaia.Entities.User", "Driver")
                         .WithMany()
-                        .HasForeignKey("DriverId")
+                        .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Driver");
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.User", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Notifications");
-
-                    b.Navigation("ReceivedMessages");
-
-                    b.Navigation("ReceivedRates");
-
-                    b.Navigation("SentMessages");
-
-                    b.Navigation("SentRates");
+                    b.Navigation("Receiver");
                 });
 #pragma warning restore 612, 618
         }
