@@ -9,7 +9,8 @@ namespace Tomnaia.Data
     public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(options)
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<Vehicle> vehicles { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Rate> Rates { get; set; }
 

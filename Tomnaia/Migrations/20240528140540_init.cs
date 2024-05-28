@@ -56,19 +56,83 @@ namespace Tomnaia.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Drivers",
+                columns: table => new
+                {
+                    DriverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NationalPhoto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NationalId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LicensePhoto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DriverLicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VehicleId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LicenseNumberVehicle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    expirDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drivers", x => x.DriverId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Rides",
                 columns: table => new
                 {
-                    RideId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RideId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DriverId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VehicleId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PickupLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DropoffLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Rider = table.Column<int>(type: "int", nullable: false),
+                    Fare = table.Column<double>(type: "float", nullable: false),
                     RequestTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rides", x => x.RideId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vehicles",
+                columns: table => new
+                {
+                    VehicleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Year = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VehicleType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Photolicense = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhotoVehicle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LicenseStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DriverId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicles", x => x.VehicleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,34 +330,6 @@ namespace Tomnaia.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "vehicles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<int>(type: "int", nullable: false),
-                    Capacity = table.Column<int>(type: "int", nullable: false),
-                    Available = table.Column<bool>(type: "bit", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Year = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VehicleType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Photolicense = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhotoVehicle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    licensestatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DriverId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_vehicles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_vehicles_AspNetUsers_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -372,11 +408,6 @@ namespace Tomnaia.Migrations
                 name: "IX_Rates_RaterId",
                 table: "Rates",
                 column: "RaterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_vehicles_DriverId",
-                table: "vehicles",
-                column: "DriverId");
         }
 
         /// <inheritdoc />
@@ -401,6 +432,9 @@ namespace Tomnaia.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "Drivers");
+
+            migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
@@ -413,7 +447,7 @@ namespace Tomnaia.Migrations
                 name: "Rides");
 
             migrationBuilder.DropTable(
-                name: "vehicles");
+                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
