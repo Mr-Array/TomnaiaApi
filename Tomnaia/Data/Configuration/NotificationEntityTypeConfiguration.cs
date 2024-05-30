@@ -8,11 +8,11 @@ namespace Tomnaia.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Notification> builder)
         {
-            builder
-                .HasOne(c => c.Receiver)
-                .WithMany(u => u.Notifications)
-                .HasForeignKey(c => c.ReceiverId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //builder
+            //    .HasOne(c => c.Receiver)
+            //    .WithMany(u => u.Notifications)
+            //    .HasForeignKey(c => c.ReceiverId)
+            //    .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

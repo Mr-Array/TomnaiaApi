@@ -7,6 +7,13 @@ namespace Tomnaia.IGenericRepository
     public interface IUnitOfWork
     {
         IGenericRepository<User> User { get; set; }
+        IGenericRepository<Adminstrator> Adminstrator { get; set; }
+        IGenericRepository<Driver> Driver { get; set; }
+        IGenericRepository<Passenger> Passenger { get; set; }
+        IGenericRepository<Vehicle> Vehicle { get; set; }
+        IGenericRepository<Ride> Ride { get; set; }
+        IGenericRepository<Review> Review { get; set; }
+        IGenericRepository<RidePassenger> RidePassenger { get; set; }
         IGenericRepository<Comment> Comment { get; set; }
         IGenericRepository<Rate> Rate { get; set; }
         IGenericRepository<Message> Message { get; set; }

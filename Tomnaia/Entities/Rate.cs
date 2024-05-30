@@ -11,13 +11,13 @@ namespace Tomnaia.Entities
         public double RateValue { get; set; }
         [Required]
         public string RaterId { get; set; }
-        [Required]
-        [ForeignKey(nameof(RaterId))]
-        public virtual User Rater { get; set; }
-        [Required]
-        public string RatedId { get; set; }
-        [Required]
-        [ForeignKey(nameof(RatedId))]
-        public virtual User Rated { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(RaterId))]
+        //public virtual User Rater { get; set; }
+        //[Required]
+        //public string RatedId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(RatedId))]
+        //public virtual User Rated { get; set; }
     }
 }
