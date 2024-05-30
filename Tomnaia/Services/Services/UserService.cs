@@ -53,12 +53,13 @@ namespace Tomnaia.Services.Services
             return newResult;
         }
 
-        public async Task<List<UserResultDto>> GetUsersByNameAsync(string name)
-        {
-            var users = await _unitOfWork.User.FindAsync(u => u.FirstName.Contains(name) || u.LastName.Contains(name));
-            var usersResult = users.Select(user => _mapper.Map<UserResultDto>(user));
-            return usersResult.ToList();
-        }
+       
+        //public async Task<List<UserResultDto>> GetUsersByNameAsync(string name)
+        //{
+        //    var users = await _unitOfWork.User.FindAsync(u => u.FirstName.Contains(name) || u.LastName.Contains(name));
+        //    var usersResult = users.Select(user => _mapper.Map<UserResultDto>(user));
+        //    return usersResult.ToList();
+        //}
 
         public async Task<bool> UpdateUserInfoAsync(UserDto userDto)
         {
@@ -141,6 +142,11 @@ namespace Tomnaia.Services.Services
         }
 
         public Task<bool> DeleteUserCVAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<UserResultDto>> GetUsersByNameAsync(string name)
         {
             throw new NotImplementedException();
         }

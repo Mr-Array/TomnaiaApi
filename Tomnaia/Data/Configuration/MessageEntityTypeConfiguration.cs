@@ -17,17 +17,17 @@ namespace Tomnaia.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Message> builder)
         {
-            builder
-                .HasOne(c => c.Sender)
-                .WithMany(u => u.SentMessages)
-                .HasForeignKey(c => c.SenderId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder
+            //    .HasOne(c => c.Sender)
+            //    .WithMany(u => u.SentMessages)
+            //    .HasForeignKey(c => c.SenderId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .HasOne(c => c.Receiver)
-                .WithMany(u => u.ReceivedMessages)
-                .HasForeignKey(c => c.ReceiverId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder
+            //    .HasOne(c => c.Receiver)
+            //    .WithMany(u => u.ReceivedMessages)
+            //    .HasForeignKey(c => c.ReceiverId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

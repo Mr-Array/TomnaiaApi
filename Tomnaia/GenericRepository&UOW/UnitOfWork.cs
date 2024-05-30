@@ -13,10 +13,17 @@ namespace Tomnaia.GenericRepository_UOW
 
         private readonly AppDbContext _context;
         public IGenericRepository<User> User { get; set; }
+        public IGenericRepository<Driver> Driver { get; set; }
+        public IGenericRepository<Passenger> Passenger { get; set; }
+        public IGenericRepository<Adminstrator> Adminstrator { get; set; }
+        public IGenericRepository<Vehicle> Vehicle { get; set; }
+        public IGenericRepository<Review> Review { get; set; }
         public IGenericRepository<Comment> Comment { get ; set ; }
         public IGenericRepository<Rate> Rate { get ; set; }
         public IGenericRepository<Message> Message { get; set ; }
         public IGenericRepository<Notification> Notification { get ; set ; }
+        public IGenericRepository<Ride> Ride { get; set; }
+        public IGenericRepository<RidePassenger> RidePassenger { get; set; }
 
         public UnitOfWork(AppDbContext context)
         {
@@ -25,7 +32,13 @@ namespace Tomnaia.GenericRepository_UOW
             Comment = new GenericRepository<Comment>(_context);
             Rate = new GenericRepository<Rate>(_context);
             Message = new GenericRepository<Message>(_context);
-            Notification = new GenericRepository<Notification>(_context);
+            Driver = new GenericRepository<Driver>(_context);
+            Passenger = new GenericRepository<Passenger>(_context);
+            Vehicle = new GenericRepository<Vehicle>(_context);
+            Adminstrator = new GenericRepository<Adminstrator>(_context);
+            Review = new GenericRepository<Review>(_context);
+            Ride = new GenericRepository<Ride>(_context);
+            RidePassenger = new GenericRepository<RidePassenger>(_context);
 
         }
 

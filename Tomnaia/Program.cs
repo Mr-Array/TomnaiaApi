@@ -80,8 +80,10 @@ namespace Tomnaia
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IAuthService, AuthService>();
-        //    builder.Services.AddScoped<IVehicleService, VehicleRepository>();
+            builder.Services.AddScoped<IReviewService, ReviewService>();
+            builder.Services.AddScoped<IRideService, RideService>();
             builder.Services.AddTransient<IRateService, RateService>();
+            builder.Services.AddScoped<IVehicleService, VehicleService>();
             builder.Services.AddTransient<IMessageService, MessageService>();
             builder.Services.AddTransient<INotificationService, NotificationService>();
             builder.Services.AddTransient<IUserHelpers, UserHelpers>();

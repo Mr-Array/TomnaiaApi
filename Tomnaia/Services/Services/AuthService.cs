@@ -53,7 +53,7 @@ namespace Tomnaia.Services.Services
             var user = _mapper.Map<User>(registerUser);
             IdentityResult result = await _userManager.CreateAsync(user, registerUser.Password);
             if (result.Succeeded)
-                await _userManager.AddToRoleAsync(user, ConstsRoles.Driver);
+                await _userManager.AddToRoleAsync(user, ConstsRoles.Passenger);
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = $"{_contextAccessor.HttpContext.Request.Scheme}://{_contextAccessor.HttpContext.Request.Host}/api/authorization/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
