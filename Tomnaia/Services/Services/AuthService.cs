@@ -55,10 +55,10 @@ namespace Tomnaia.Services.Services
             if (result.Succeeded)
                 await _userManager.AddToRoleAsync(user, ConstsRoles.Driver);
 
-            //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            //var confirmationLink = $"{_contextAccessor.HttpContext.Request.Scheme}://{_contextAccessor.HttpContext.Request.Host}/api/authorization/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
-            //var message = new MailMessage(new string[] { user.Email }, "Confirmation email link", confirmationLink);
-            //_mailingService.SendMail(message);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = $"{_contextAccessor.HttpContext.Request.Scheme}://{_contextAccessor.HttpContext.Request.Host}/api/authorization/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
+            var message = new MailMessage(new string[] { user.Email }, "Confirmation email link", confirmationLink);
+            _mailingService.SendMail(message);
             return result;
         }
 
