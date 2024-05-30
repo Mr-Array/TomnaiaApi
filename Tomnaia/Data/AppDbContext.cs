@@ -43,11 +43,11 @@ namespace Tomnaia.Data
             //    .HasForeignKey(rp => rp.PassengerId).OnDelete(DeleteBehavior.NoAction);
 
 
-            //    modelBuilder.Entity<Driver>()
-            //        .HasMany(d => d.Vehicles)
-            //        .WithOne(v => v.Driver)
-            //        .HasForeignKey(v => v.DriverId)
-            //        .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Driver>()
+                .HasOne(d=>d.Vehicle)
+                .WithMany()
+                .HasForeignKey(v => v.DriverId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //    modelBuilder.Entity<Driver>()
             //        .HasMany(d => d.Rides)
@@ -81,11 +81,11 @@ namespace Tomnaia.Data
             //        .HasForeignKey(v => v.DriverId)
             //        .OnDelete(DeleteBehavior.Restrict);
 
-            //    modelBuilder.Entity<Vehicle>()
-            //        .HasMany(v => v.Rides)
-            //        .WithOne(r => r.Vehicle)
-            //        .HasForeignKey(r => r.VehicleId)
-            //        .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Vehicle>()
+                .HasMany(v => v.Rides)
+                .WithOne(r => r.Vehicle)
+                .HasForeignKey(r => r.VehicleId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //    // Ride configuration
             //    modelBuilder.Entity<Ride>()
