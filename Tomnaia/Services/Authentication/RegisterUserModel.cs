@@ -14,8 +14,7 @@ public class RegisterUserModel
     [Required]
     public string ConfirmPassowrd { get; set; }
     [Required]
-    public AccountType AccountType { get; set; }
-
+   
     // Driver specific properties
     public string? NationalPhoto { get; set; }
     public string? NationalId { get; set; }
@@ -28,4 +27,7 @@ public class RegisterUserModel
     public string? Country { get; set; }
     public string? City { get; set; }
     public string? Street { get; set; }
+
+    public AccountType AccountType { get; set; }
+
 }
