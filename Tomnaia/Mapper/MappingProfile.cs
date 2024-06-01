@@ -17,6 +17,8 @@ namespace Tomnaia.Mapper
             //       .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
             //CreateMap<UserDto, User>().ReverseMap();
 
+            CreateMap<UserResultDto, User>().ReverseMap();
+
             //CreateMap<RegisterAdmin, User>()
             //       .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
             //CreateMap<AdminstratorDTO, User>().ReverseMap();
