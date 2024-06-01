@@ -22,7 +22,11 @@ namespace Tomnaia.Mapper
             //CreateMap<AdminstratorDTO, User>().ReverseMap();
             //CreateMap<RegisterDriver, User>()
             //       .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
+            CreateMap<UserResultDto, User>().ReverseMap();
+            CreateMap<AdminstratorDTO, User>().ReverseMap();
+            CreateMap<PassengerDto, User>().ReverseMap();
             CreateMap<DriverDto, User>().ReverseMap();
+            //CreateMap<DriverDto, User>().ReverseMap();
             CreateMap<RegisterUserModel, User>()
             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
 
