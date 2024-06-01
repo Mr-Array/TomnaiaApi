@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tomnaia.Data;
 
@@ -11,9 +12,11 @@ using Tomnaia.Data;
 namespace Tomnaia.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240601195823_edit")]
+    partial class edit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -377,8 +380,10 @@ namespace Tomnaia.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("AccountType")
-                        .HasColumnType("int");
+                    b.Property<string>("AccountType")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -462,7 +467,9 @@ namespace Tomnaia.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("AccountType").HasValue("User");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Vehicle", b =>
@@ -514,7 +521,7 @@ namespace Tomnaia.Migrations
                 {
                     b.HasBaseType("Tomnaia.Entities.User");
 
-                    b.ToTable("Admins", (string)null);
+                    b.HasDiscriminator().HasValue("Admin");
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Driver", b =>
@@ -540,14 +547,14 @@ namespace Tomnaia.Migrations
                     b.Property<DateTime>("expirDate")
                         .HasColumnType("datetime2");
 
-                    b.ToTable("Drivers", (string)null);
+                    b.HasDiscriminator().HasValue("Driver");
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Passenger", b =>
                 {
                     b.HasBaseType("Tomnaia.Entities.User");
 
-                    b.ToTable("Passengers", (string)null);
+                    b.HasDiscriminator().HasValue("Passenger");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -673,33 +680,6 @@ namespace Tomnaia.Migrations
                         .IsRequired();
 
                     b.Navigation("Driver");
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.Adminstrator", b =>
-                {
-                    b.HasOne("Tomnaia.Entities.User", null)
-                        .WithOne()
-                        .HasForeignKey("Tomnaia.Entities.Adminstrator", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.Driver", b =>
-                {
-                    b.HasOne("Tomnaia.Entities.User", null)
-                        .WithOne()
-                        .HasForeignKey("Tomnaia.Entities.Driver", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.Passenger", b =>
-                {
-                    b.HasOne("Tomnaia.Entities.User", null)
-                        .WithOne()
-                        .HasForeignKey("Tomnaia.Entities.Passenger", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Driver", b =>

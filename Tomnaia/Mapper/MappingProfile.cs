@@ -17,15 +17,24 @@ namespace Tomnaia.Mapper
             //       .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
             //CreateMap<UserDto, User>().ReverseMap();
 
-            CreateMap<RegisterAdmin, User>()
-                   .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
-            CreateMap<AdminstratorDTO, User>().ReverseMap();
-            CreateMap<RegisterDriver, User>()
-                   .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
+            //CreateMap<RegisterAdmin, User>()
+            //       .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
+            //CreateMap<AdminstratorDTO, User>().ReverseMap();
+            //CreateMap<RegisterDriver, User>()
+            //       .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
             CreateMap<DriverDto, User>().ReverseMap();
-            CreateMap<RegisterPassenger, User>()
-                   .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
-            CreateMap<PassengerDto, User>().ReverseMap();
+            CreateMap<RegisterUserModel, User>()
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
+
+            CreateMap<RegisterUserModel, Passenger>()
+                .IncludeBase<RegisterUserModel, User>();
+
+            CreateMap<RegisterUserModel, Driver>()
+                .IncludeBase<RegisterUserModel, User>()
+                .ForMember(dest => dest.expirDate, opt => opt.MapFrom(src => src.ExpirDate));
+
+            CreateMap<RegisterUserModel, Adminstrator>()
+                .IncludeBase<RegisterUserModel, User>();
 
 
             //CreateMap<MessageResultDto, Message>().ReverseMap();

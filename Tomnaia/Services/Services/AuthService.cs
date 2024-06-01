@@ -43,17 +43,31 @@ namespace Tomnaia.Services.Services
         #endregion
 
         #region Registration
-        public async Task<IdentityResult> RegisterAsync(RegisterUser registerUser)
+        public async Task<IdentityResult> RegisterAsync(RegisterUserModel registerUser)
         {
             var userExist = await _userManager.FindByEmailAsync(registerUser.Email);
-
             if (userExist != null)
                 return IdentityResult.Failed(new IdentityError { Description = "User with this email already exists." });
 
-            var user = _mapper.Map<User>(registerUser);
-            IdentityResult result = await _userManager.CreateAsync(user, registerUser.Password);
+            User user;
+            switch (registerUser.AccountType)
+            {
+                case AccountType.Passenger:
+                    user = _mapper.Map<Passenger>(registerUser);
+                    break;
+                case AccountType.Driver:
+                    user = _mapper.Map<Driver>(registerUser);
+                    break;
+                case AccountType.Admin:
+                    user = _mapper.Map<Adminstrator>(registerUser);
+                    break;
+                default:
+                    return IdentityResult.Failed(new IdentityError { Description = "Invalid account type." });
+            }
+
+            var result = await _userManager.CreateAsync(user, registerUser.Password);
             if (result.Succeeded)
-                await _userManager.AddToRoleAsync(user, ConstsRoles.Passenger);
+                await _userManager.AddToRoleAsync(user, registerUser.AccountType.ToString());
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = $"{_contextAccessor.HttpContext.Request.Scheme}://{_contextAccessor.HttpContext.Request.Host}/api/authorization/confirm-email?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
@@ -61,6 +75,8 @@ namespace Tomnaia.Services.Services
             _mailingService.SendMail(message);
             return result;
         }
+
+
 
 
         public async Task<bool> ConfirmEmailAsync(string email, string token)

@@ -7,7 +7,7 @@ namespace Tomnaia.Interfaces
 {
     public interface IAuthService
     {
-        Task<IdentityResult> RegisterAsync(RegisterUser registerUser);
+        Task<IdentityResult> RegisterAsync(RegisterUserModel registerUser);
         Task<bool> ConfirmEmailAsync(string email, string token);
          Task<LoginResult> LoginAsync(LoginUser loginUser);
          Task<LogoutResult> LogoutAsync();

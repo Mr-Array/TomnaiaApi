@@ -12,7 +12,7 @@ using Tomnaia.Data;
 namespace Tomnaia.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240530195625_init")]
+    [Migration("20240601193422_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -178,14 +178,38 @@ namespace Tomnaia.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.Adminstrator", b =>
+            modelBuilder.Entity("Tomnaia.Entities.BlockRequest", b =>
                 {
-                    b.Property<string>("AdminstratorId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("AdminstratorId");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.ToTable("Adminstrators");
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequesterId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TargetUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequesterId");
+
+                    b.ToTable("BlockRequests");
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Comment", b =>
@@ -211,40 +235,21 @@ namespace Tomnaia.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.Driver", b =>
+            modelBuilder.Entity("Tomnaia.Entities.Message", b =>
                 {
-                    b.Property<string>("DriverId")
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("DriverLicenseNumber")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LicensePhoto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NationalId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NationalPhoto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("expirDate")
+                    b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("DriverId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Drivers");
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Notification", b =>
@@ -268,16 +273,6 @@ namespace Tomnaia.Migrations
                     b.HasIndex("ReceiverId");
 
                     b.ToTable("Notifications");
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.Passenger", b =>
-                {
-                    b.Property<string>("PassengerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PassengerId");
-
-                    b.ToTable("Passengers");
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Rate", b =>
@@ -313,19 +308,21 @@ namespace Tomnaia.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<string>("RideId")
+                    b.Property<string>("RevieweeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("ReviewerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RideRequestId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ReviewId");
 
-                    b.HasIndex("RideId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("RideRequestId");
 
                     b.ToTable("Reviews");
                 });
@@ -333,10 +330,6 @@ namespace Tomnaia.Migrations
             modelBuilder.Entity("Tomnaia.Entities.Ride", b =>
                 {
                     b.Property<string>("RideId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("DriverId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DropoffLocation")
@@ -348,6 +341,10 @@ namespace Tomnaia.Migrations
 
                     b.Property<double>("Fare")
                         .HasColumnType("float");
+
+                    b.Property<string>("PassengerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PickupLocation")
                         .IsRequired()
@@ -368,7 +365,7 @@ namespace Tomnaia.Migrations
 
                     b.HasKey("RideId");
 
-                    b.HasIndex("DriverId");
+                    b.HasIndex("PassengerId");
 
                     b.HasIndex("VehicleId");
 
@@ -402,9 +399,6 @@ namespace Tomnaia.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdminstratorId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -414,9 +408,6 @@ namespace Tomnaia.Migrations
 
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DriverIdId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -450,9 +441,6 @@ namespace Tomnaia.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("PassengerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -483,10 +471,6 @@ namespace Tomnaia.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdminstratorId");
-
-                    b.HasIndex("DriverIdId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -495,9 +479,9 @@ namespace Tomnaia.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("PassengerId");
-
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Vehicle", b =>
@@ -543,6 +527,46 @@ namespace Tomnaia.Migrations
                     b.HasIndex("DriverId");
 
                     b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("Tomnaia.Entities.Adminstrator", b =>
+                {
+                    b.HasBaseType("Tomnaia.Entities.User");
+
+                    b.ToTable("Admins", (string)null);
+                });
+
+            modelBuilder.Entity("Tomnaia.Entities.Driver", b =>
+                {
+                    b.HasBaseType("Tomnaia.Entities.User");
+
+                    b.Property<string>("DriverLicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LicensePhoto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NationalId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NationalPhoto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("expirDate")
+                        .HasColumnType("datetime2");
+
+                    b.ToTable("Drivers", (string)null);
+                });
+
+            modelBuilder.Entity("Tomnaia.Entities.Passenger", b =>
+                {
+                    b.HasBaseType("Tomnaia.Entities.User");
+
+                    b.ToTable("Passengers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -596,6 +620,17 @@ namespace Tomnaia.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Tomnaia.Entities.BlockRequest", b =>
+                {
+                    b.HasOne("Tomnaia.Entities.Adminstrator", "Requester")
+                        .WithMany()
+                        .HasForeignKey("RequesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Requester");
+                });
+
             modelBuilder.Entity("Tomnaia.Entities.Comment", b =>
                 {
                     b.HasOne("Tomnaia.Entities.User", "User")
@@ -605,17 +640,6 @@ namespace Tomnaia.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.Driver", b =>
-                {
-                    b.HasOne("Tomnaia.Entities.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Notification", b =>
@@ -632,37 +656,29 @@ namespace Tomnaia.Migrations
             modelBuilder.Entity("Tomnaia.Entities.Review", b =>
                 {
                     b.HasOne("Tomnaia.Entities.Ride", "Ride")
-                        .WithMany("Reviews")
-                        .HasForeignKey("RideId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tomnaia.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("RideRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Ride");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Ride", b =>
                 {
-                    b.HasOne("Tomnaia.Entities.Driver", "Driver")
+                    b.HasOne("Tomnaia.Entities.Passenger", "Passenger")
                         .WithMany()
-                        .HasForeignKey("DriverId")
+                        .HasForeignKey("PassengerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Tomnaia.Entities.Vehicle", "Vehicle")
-                        .WithMany("Rides")
+                        .WithMany()
                         .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Driver");
+                    b.Navigation("Passenger");
 
                     b.Navigation("Vehicle");
                 });
@@ -676,7 +692,7 @@ namespace Tomnaia.Migrations
                         .IsRequired();
 
                     b.HasOne("Tomnaia.Entities.Ride", "Ride")
-                        .WithMany("RidePassengers")
+                        .WithMany()
                         .HasForeignKey("RideId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -686,31 +702,10 @@ namespace Tomnaia.Migrations
                     b.Navigation("Ride");
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.User", b =>
-                {
-                    b.HasOne("Tomnaia.Entities.Adminstrator", "Adminstrator")
-                        .WithMany()
-                        .HasForeignKey("AdminstratorId");
-
-                    b.HasOne("Tomnaia.Entities.Driver", "Driver")
-                        .WithMany()
-                        .HasForeignKey("DriverIdId");
-
-                    b.HasOne("Tomnaia.Entities.Passenger", "Passenger")
-                        .WithMany()
-                        .HasForeignKey("PassengerId");
-
-                    b.Navigation("Adminstrator");
-
-                    b.Navigation("Driver");
-
-                    b.Navigation("Passenger");
-                });
-
             modelBuilder.Entity("Tomnaia.Entities.Vehicle", b =>
                 {
                     b.HasOne("Tomnaia.Entities.Driver", "Driver")
-                        .WithMany()
+                        .WithMany("Vehicles")
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -718,16 +713,36 @@ namespace Tomnaia.Migrations
                     b.Navigation("Driver");
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.Ride", b =>
+            modelBuilder.Entity("Tomnaia.Entities.Adminstrator", b =>
                 {
-                    b.Navigation("Reviews");
-
-                    b.Navigation("RidePassengers");
+                    b.HasOne("Tomnaia.Entities.User", null)
+                        .WithOne()
+                        .HasForeignKey("Tomnaia.Entities.Adminstrator", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.Vehicle", b =>
+            modelBuilder.Entity("Tomnaia.Entities.Driver", b =>
                 {
-                    b.Navigation("Rides");
+                    b.HasOne("Tomnaia.Entities.User", null)
+                        .WithOne()
+                        .HasForeignKey("Tomnaia.Entities.Driver", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Tomnaia.Entities.Passenger", b =>
+                {
+                    b.HasOne("Tomnaia.Entities.User", null)
+                        .WithOne()
+                        .HasForeignKey("Tomnaia.Entities.Passenger", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Tomnaia.Entities.Driver", b =>
+                {
+                    b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618
         }

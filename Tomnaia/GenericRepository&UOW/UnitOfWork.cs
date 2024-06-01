@@ -23,7 +23,6 @@ namespace Tomnaia.GenericRepository_UOW
         public IGenericRepository<Message> Message { get; set ; }
         public IGenericRepository<Notification> Notification { get ; set ; }
         public IGenericRepository<Ride> Ride { get; set; }
-        public IGenericRepository<RidePassenger> RidePassenger { get; set; }
 
         public UnitOfWork(AppDbContext context)
         {
@@ -38,7 +37,6 @@ namespace Tomnaia.GenericRepository_UOW
             Adminstrator = new GenericRepository<Adminstrator>(_context);
             Review = new GenericRepository<Review>(_context);
             Ride = new GenericRepository<Ride>(_context);
-            RidePassenger = new GenericRepository<RidePassenger>(_context);
 
         }
 

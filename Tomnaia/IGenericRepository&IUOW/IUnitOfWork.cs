@@ -13,7 +13,6 @@ namespace Tomnaia.IGenericRepository
         IGenericRepository<Vehicle> Vehicle { get; set; }
         IGenericRepository<Ride> Ride { get; set; }
         IGenericRepository<Review> Review { get; set; }
-        IGenericRepository<RidePassenger> RidePassenger { get; set; }
         IGenericRepository<Comment> Comment { get; set; }
         IGenericRepository<Rate> Rate { get; set; }
         IGenericRepository<Message> Message { get; set; }

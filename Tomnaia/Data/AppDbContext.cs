@@ -8,7 +8,7 @@ namespace Tomnaia.Data
 {
     public class AppDbContext(DbContextOptions options) : IdentityDbContext<User>(options)
     {
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Adminstrator> Adminstrators { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
@@ -20,7 +20,6 @@ namespace Tomnaia.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Rate> Rates { get; set; }
         public DbSet<Ride> Rides { get; set; }
-        public DbSet<RidePassenger> RidePassengers { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
          public DbSet<Entities.Message> Messages { get; set; }
@@ -30,8 +29,10 @@ namespace Tomnaia.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<RidePassenger>()
-                 .HasKey(rp => new { rp.RideId, rp.PassengerId });
+            modelBuilder.Entity<Passenger>().ToTable("Passengers");
+            modelBuilder.Entity<Driver>().ToTable("Drivers");
+            modelBuilder.Entity<Adminstrator>().ToTable("Admins");
+
 
             //modelBuilder.Entity<RidePassenger>()
             //    .HasOne(rp => rp.Ride)
@@ -45,16 +46,16 @@ namespace Tomnaia.Data
 
 
             //modelBuilder.Entity<Driver>()
-            //    .HasOne(d=>d.Vehicle)
+            //    .HasOne(d => d.Vehicles)
             //    .WithMany()
-            //    .HasForeignKey(v => v.DriverId)
+            //    .HasForeignKey(v => v.dri)
             //    .OnDelete(DeleteBehavior.NoAction);
 
-            //    modelBuilder.Entity<Driver>()
-            //        .HasMany(d => d.Rides)
-            //        .WithOne(r => r.Driver)
-            //        .HasForeignKey(r => r.DriverId)
-            //        .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Driver>()
+                .HasMany(d => d.Vehicles)
+                .WithOne(r => r.Driver)
+                .HasForeignKey(r => r.DriverId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //    // Passenger configuration
             //    modelBuilder.Entity<Passenger>()
