@@ -12,7 +12,7 @@ using Tomnaia.Data;
 namespace Tomnaia.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240601193422_init")]
+    [Migration("20240601211252_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -372,21 +372,6 @@ namespace Tomnaia.Migrations
                     b.ToTable("Rides");
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.RidePassenger", b =>
-                {
-                    b.Property<string>("RideId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PassengerId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("RideId", "PassengerId");
-
-                    b.HasIndex("PassengerId");
-
-                    b.ToTable("RidePassengers");
-                });
-
             modelBuilder.Entity("Tomnaia.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -395,9 +380,8 @@ namespace Tomnaia.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AccountType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AccountType")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -683,31 +667,12 @@ namespace Tomnaia.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.RidePassenger", b =>
-                {
-                    b.HasOne("Tomnaia.Entities.Passenger", "Passenger")
-                        .WithMany()
-                        .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Tomnaia.Entities.Ride", "Ride")
-                        .WithMany()
-                        .HasForeignKey("RideId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Passenger");
-
-                    b.Navigation("Ride");
-                });
-
             modelBuilder.Entity("Tomnaia.Entities.Vehicle", b =>
                 {
                     b.HasOne("Tomnaia.Entities.Driver", "Driver")
                         .WithMany("Vehicles")
                         .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Driver");

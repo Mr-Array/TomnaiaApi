@@ -32,6 +32,7 @@ namespace Tomnaia.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AccountType = table.Column<int>(type: "int", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -40,7 +41,6 @@ namespace Tomnaia.Migrations
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    AccountType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -334,8 +334,7 @@ namespace Tomnaia.Migrations
                         name: "FK_Vehicles_Drivers_DriverId",
                         column: x => x.DriverId,
                         principalTable: "Drivers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -367,7 +366,7 @@ namespace Tomnaia.Migrations
                         column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "VehicleId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -391,30 +390,6 @@ namespace Tomnaia.Migrations
                         principalTable: "Rides",
                         principalColumn: "RideId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RidePassengers",
-                columns: table => new
-                {
-                    RideId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PassengerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RidePassengers", x => new { x.RideId, x.PassengerId });
-                    table.ForeignKey(
-                        name: "FK_RidePassengers_Passengers_PassengerId",
-                        column: x => x.PassengerId,
-                        principalTable: "Passengers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RidePassengers_Rides_RideId",
-                        column: x => x.RideId,
-                        principalTable: "Rides",
-                        principalColumn: "RideId",
-                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.InsertData(
@@ -487,11 +462,6 @@ namespace Tomnaia.Migrations
                 column: "RideRequestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RidePassengers_PassengerId",
-                table: "RidePassengers",
-                column: "PassengerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Rides_PassengerId",
                 table: "Rides",
                 column: "PassengerId");
@@ -542,9 +512,6 @@ namespace Tomnaia.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reviews");
-
-            migrationBuilder.DropTable(
-                name: "RidePassengers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
