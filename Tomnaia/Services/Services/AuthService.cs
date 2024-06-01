@@ -75,10 +75,6 @@ namespace Tomnaia.Services.Services
             _mailingService.SendMail(message);
             return result;
         }
-
-
-
-
         public async Task<bool> ConfirmEmailAsync(string email, string token)
         {
             var user = await _userManager.FindByEmailAsync(email);
