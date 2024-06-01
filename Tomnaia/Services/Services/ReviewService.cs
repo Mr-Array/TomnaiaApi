@@ -20,13 +20,13 @@ namespace Tomnaia.Services.Services
 
         public async Task<IEnumerable<ReviewDto>> GetReviewsAsync()
         {
-            var reviews = await _context.Reviews.Include(r => r.User).ToListAsync();
+            var reviews = await _context.Reviews.Include(r => r.ReviewerId).ToListAsync();
             return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
         }
 
         public async Task<ReviewDto> GetReviewByIdAsync(string reviewId)
         {
-            var review = await _context.Reviews.Include(r => r.User).FirstOrDefaultAsync(r => r.ReviewId == reviewId);
+            var review = await _context.Reviews.Include(r => r.ReviewerId).FirstOrDefaultAsync(r => r.ReviewId == reviewId);
             if (review == null)
             {
                 return null;

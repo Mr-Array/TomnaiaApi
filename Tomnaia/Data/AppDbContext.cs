@@ -14,7 +14,8 @@ namespace Tomnaia.Data
         public DbSet<Passenger> Passengers { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        
+        public DbSet<BlockRequest> BlockRequests { get; set; }
+
         /// </summary>
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Rate> Rates { get; set; }
@@ -22,7 +23,7 @@ namespace Tomnaia.Data
         public DbSet<RidePassenger> RidePassengers { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-        // public DbSet<Entities.Message> Messages { get; set; }
+         public DbSet<Entities.Message> Messages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,11 +44,11 @@ namespace Tomnaia.Data
             //    .HasForeignKey(rp => rp.PassengerId).OnDelete(DeleteBehavior.NoAction);
 
 
-            modelBuilder.Entity<Driver>()
-                .HasOne(d=>d.Vehicle)
-                .WithMany()
-                .HasForeignKey(v => v.DriverId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<Driver>()
+            //    .HasOne(d=>d.Vehicle)
+            //    .WithMany()
+            //    .HasForeignKey(v => v.DriverId)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
             //    modelBuilder.Entity<Driver>()
             //        .HasMany(d => d.Rides)
@@ -81,11 +82,11 @@ namespace Tomnaia.Data
             //        .HasForeignKey(v => v.DriverId)
             //        .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Vehicle>()
-                .HasMany(v => v.Rides)
-                .WithOne(r => r.Vehicle)
-                .HasForeignKey(r => r.VehicleId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<Vehicle>()
+            //    .HasMany(v => v.Rides)
+            //    .WithOne(r => r.Vehicle)
+            //    .HasForeignKey(r => r.VehicleId)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
             //    // Ride configuration
             //    modelBuilder.Entity<Ride>()

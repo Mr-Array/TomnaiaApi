@@ -31,16 +31,16 @@ namespace Tomnaia.Entities
 
         //public string? Street { get; set; }
 
-        public string VehicleId { get; set; }
-        [ForeignKey(nameof(VehicleId))]
-        public Vehicle Vehicle { get; set; }
+        //public string VehicleId { get; set; }
+        //[ForeignKey(nameof(VehicleId))]
+        //public Vehicle Vehicle { get; set; }
         //public string LicenseNumberVehicle { get; set; }
         //[ForeignKey("Account")]
         //public string? AccountId { get; set; }
         //public User? Account { get; set; }
         public DateTime expirDate { get; set; }
      
-        //public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
+        public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
         //public ICollection<Ride> Rides { get; set; } = new List<Ride>();
     }
 }

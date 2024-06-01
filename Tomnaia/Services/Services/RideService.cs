@@ -20,13 +20,13 @@ namespace Tomnaia.Services.Services
 
         public async Task<IEnumerable<RideDto>> GetRidesAsync()
         {
-            var rides = await _context.Rides.Include(r => r.Driver).Include(r => r.DriverId).ToListAsync();
+            var rides = await _context.Rides.Include(r => r.Rider).Include(r => r.PassengerId).ToListAsync();
             return _mapper.Map<IEnumerable<RideDto>>(rides);
         }
 
         public async Task<RideDto> GetRideByIdAsync(string rideId)
         {
-            var ride = await _context.Rides.Include(r => r.Driver).Include(r => r.DriverId).FirstOrDefaultAsync(r => r.RideId == rideId);
+            var ride = await _context.Rides.Include(r => r.Passenger).Include(r => r.RideId).FirstOrDefaultAsync(r => r.RideId == rideId);
             if (ride == null)
             {
                 return null;
@@ -71,7 +71,7 @@ namespace Tomnaia.Services.Services
 
         public async Task<IEnumerable<RideDto>> GetRidesByDriverIdAsync(string driverId)
         {
-            var rides = await _context.Rides.Where(r => r.DriverId == driverId).Include(r => r.Driver).Include(r => r.DriverId).ToListAsync();
+            var rides = await _context.Rides.Where(r => r.RideId== driverId).Include(r => r.RideId).Include(r => r.PassengerId).ToListAsync();
             return _mapper.Map<IEnumerable<RideDto>>(rides);
         }
     }

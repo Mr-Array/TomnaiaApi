@@ -4,9 +4,12 @@ namespace Tomnaia.DTO
 {
     public class AdminstratorDTO
     {
-        [Required(ErrorMessage = " Name Is Required")]
-        [MinLength(3, ErrorMessage = "Name must be 3 char at least")]
-        public string Name { get; set; }
-        public string AdminId { get; set; }
+        public string AdminstratorId { get; set; }
+        public string UserName { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Email { get; set; }
+        public string? ProfilePicture { get; set; }
     }
 }

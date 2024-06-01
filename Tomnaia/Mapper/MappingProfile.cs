@@ -17,8 +17,19 @@ namespace Tomnaia.Mapper
             //       .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
             //CreateMap<UserDto, User>().ReverseMap();
 
+            CreateMap<RegisterAdmin, User>()
+                   .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
+            CreateMap<AdminstratorDTO, User>().ReverseMap();
+            CreateMap<RegisterDriver, User>()
+                   .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
+            CreateMap<DriverDto, User>().ReverseMap();
+            CreateMap<RegisterPassenger, User>()
+                   .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => new MailAddress(src.Email).User));
+            CreateMap<PassengerDto, User>().ReverseMap();
+
+
             //CreateMap<MessageResultDto, Message>().ReverseMap();
-            
+
             //CreateMap<Comment, CommentDto>();
             //CreateMap<Notification, NotificationResultDto>();
             ///// الجديدد 
@@ -74,7 +85,7 @@ namespace Tomnaia.Mapper
 
             //    return totalRate / user.ReceivedRates.Count;
         }
-    //
+        //
     }
 }
 

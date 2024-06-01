@@ -24,6 +24,6 @@ namespace Tomnaia.Entities
         [ForeignKey(nameof(DriverId))]
         public Driver Driver { get; set; }
 
-        public ICollection<Ride>? Rides { get; set; } = new List<Ride>();
+        //public ICollection<Ride>? Rides { get; set; } = new List<Ride>();
     }
 }

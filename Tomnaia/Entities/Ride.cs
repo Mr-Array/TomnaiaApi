@@ -20,11 +20,17 @@ namespace Tomnaia.Entities
         public double Fare { get; set; }
         public DateTime RequestTime { get; set; }
 
-        [Required]
-        public string DriverId { get; set; }
+        //[Required]
+        //public string DriverId { get; set; }
 
-        [ForeignKey(nameof(DriverId))]
-        public Driver Driver { get; set; }
+        //[ForeignKey(nameof(DriverId))]
+        //public Driver Driver { get; set; }
+
+        [Required]
+        public string PassengerId { get; set; }
+
+        [ForeignKey(nameof(PassengerId))]
+        public Passenger Passenger { get; set; }
 
         [Required]
         public string VehicleId { get; set; }
@@ -32,7 +38,7 @@ namespace Tomnaia.Entities
         [ForeignKey(nameof(VehicleId))]
         public Vehicle Vehicle { get; set; }
 
-        public ICollection<RidePassenger> RidePassengers { get; set; } = new List<RidePassenger>();
-        public ICollection<Review> Reviews { get; set; } = new List<Review>();
+        //public ICollection<RidePassenger> RidePassengers { get; set; } = new List<RidePassenger>();
+        //public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }
