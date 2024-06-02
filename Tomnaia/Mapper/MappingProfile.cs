@@ -13,9 +13,10 @@ namespace Tomnaia.Mapper
     {
         public MappingProfile()
         {
-           
 
-           
+            CreateMap<Vehicle, VehicleDto>();
+            CreateMap<VehicleDto, Vehicle>();
+
             CreateMap<UserResultDto, User>().ReverseMap();
             CreateMap<AdminstratorDTO, User>().ReverseMap();
             CreateMap<PassengerDto, User>().ReverseMap();
