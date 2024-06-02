@@ -35,7 +35,7 @@ namespace Tomnaia.Services.Services
         {
             var currentUser = await _userHelpers.GetCurrentUserAsync();
             if (currentUser == null) throw new Exception("user not found");
-            var notifications = await _unitOfWork.Notification.FindAsync(n => n.ReceiverId == currentUser.Id, n => n.Timestamp, OrderDirection.Descending);
+            var notifications = await _unitOfWork.Notification.FindAsync(n => n.PassengerId == currentUser.Id || n.DriverId == currentUser.Id, n => n.Timestamp, OrderDirection.Descending);
             var notificationResult = notifications.Select(notification => _mapper.Map<NotificationResultDto>(notification)).ToList();
             return notificationResult;
         }
@@ -44,8 +44,8 @@ namespace Tomnaia.Services.Services
         {
             var currentUser = await _userHelpers.GetCurrentUserAsync();
             if (currentUser == null) throw new Exception("user not found");
-            var notification = await _unitOfWork.Notification.FindFirstAsync(n => n.Id == notificationId);
-            if (notification.ReceiverId != currentUser.Id) throw new Exception("cant access");
+            var notification = await _unitOfWork.Notification.FindFirstAsync(n => n.Id == notificationId && (n.PassengerId == currentUser.Id || n.DriverId == currentUser.Id));
+            if (notification == null) throw new Exception("Notification not found");
             var notificationResult = _mapper.Map<NotificationResultDto>(notification);
             return notificationResult;
         }
@@ -54,21 +54,19 @@ namespace Tomnaia.Services.Services
         {
             var currentUser = await _userHelpers.GetCurrentUserAsync();
             if (currentUser == null) throw new Exception("user not found");
-            var notification = await _unitOfWork.Notification.FindFirstAsync(n => n.Id == notificationId);
-            if (notification.ReceiverId != currentUser.Id) throw new Exception("cant access");
+            var notification = await _unitOfWork.Notification.FindFirstAsync(n => n.Id == notificationId && (n.PassengerId == currentUser.Id || n.DriverId == currentUser.Id));
+            if (notification == null) throw new Exception("Notification not found");
             _unitOfWork.Notification.Remove(notification);
-            if (_unitOfWork.Save() > 0) return true;
-            return false;
+            return _unitOfWork.Save() > 0;
         }
 
         public async Task<bool> DeleteAllNotificationAsync()
         {
             var currentUser = await _userHelpers.GetCurrentUserAsync();
             if (currentUser == null) throw new Exception("user not found");
-            var notifications = await _unitOfWork.Notification.FindAsync(n => n.ReceiverId == currentUser.Id);
+            var notifications = await _unitOfWork.Notification.FindAsync(n => n.PassengerId == currentUser.Id || n.DriverId == currentUser.Id);
             _unitOfWork.Notification.RemoveRange(notifications);
-            if (_unitOfWork.Save() > 0) return true;
-            return false;
+            return _unitOfWork.Save() > 0;
         }
 
         #endregion

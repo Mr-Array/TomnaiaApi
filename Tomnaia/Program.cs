@@ -76,7 +76,7 @@ namespace Tomnaia
             #endregion
 
             #region Dependency Injection
-            //builder.Services.AddScoped<IAuthService, AuthService>();
+           
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<IAuthService, AuthService>();
@@ -90,8 +90,7 @@ namespace Tomnaia
             builder.Services.AddTransient<IUnitOfWork,UnitOfWork >();
             builder.Services.AddScoped<IMailingService, MailingService>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            // builder.Services.AddTransient< IAuthService, AuthService>();
-            //builder.Services.AddReposetoriesServices();
+            
             #endregion
 
             #region mailing

@@ -12,7 +12,7 @@ using Tomnaia.Data;
 namespace Tomnaia.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240601211252_init")]
+    [Migration("20240602090726_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -244,10 +244,34 @@ namespace Tomnaia.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ReceiverDriverId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ReceiverPassengerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderDriverId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderPassengerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReceiverDriverId");
+
+                    b.HasIndex("ReceiverPassengerId");
+
+                    b.HasIndex("SenderDriverId");
+
+                    b.HasIndex("SenderPassengerId");
 
                     b.ToTable("Messages");
                 });
@@ -626,6 +650,41 @@ namespace Tomnaia.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Tomnaia.Entities.Message", b =>
+                {
+                    b.HasOne("Tomnaia.Entities.Driver", "ReceiverDriver")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverDriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Tomnaia.Entities.Passenger", "ReceiverPassenger")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverPassengerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Tomnaia.Entities.Driver", "SenderDriver")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderDriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Tomnaia.Entities.Passenger", "SenderPassenger")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderPassengerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ReceiverDriver");
+
+                    b.Navigation("ReceiverPassenger");
+
+                    b.Navigation("SenderDriver");
+
+                    b.Navigation("SenderPassenger");
+                });
+
             modelBuilder.Entity("Tomnaia.Entities.Notification", b =>
                 {
                     b.HasOne("Tomnaia.Entities.User", "Receiver")
@@ -707,7 +766,18 @@ namespace Tomnaia.Migrations
 
             modelBuilder.Entity("Tomnaia.Entities.Driver", b =>
                 {
+                    b.Navigation("ReceivedMessages");
+
+                    b.Navigation("SentMessages");
+
                     b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("Tomnaia.Entities.Passenger", b =>
+                {
+                    b.Navigation("ReceivedMessages");
+
+                    b.Navigation("SentMessages");
                 });
 #pragma warning restore 612, 618
         }

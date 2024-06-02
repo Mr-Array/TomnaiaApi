@@ -7,7 +7,7 @@ namespace Tomnaia.Entities
 {
     public class Driver :User
     {
-
+       // public string DriverId { get; set; }
 
         [Required]
         public string NationalPhoto { get; set; }
@@ -22,5 +22,8 @@ namespace Tomnaia.Entities
         public DateTime expirDate { get; set; }
      
         public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
+        public virtual ICollection<Message>? SentMessages { get; set; }
+        public virtual ICollection<Message>? ReceivedMessages { get; set; }
+        public virtual ICollection<Notification>? Notifications { get; set; }
     }
 }

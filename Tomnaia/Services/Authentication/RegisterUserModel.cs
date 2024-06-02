@@ -2,12 +2,16 @@
 
 public class RegisterUserModel
 {
-    [Required]
+    [Required(ErrorMessage = " Name Is Required")]
+    [MinLength(3, ErrorMessage = "Name must be 3 char at least")]
     public string FirstName { get; set; }
-    [Required]
+    [Required(ErrorMessage = " Name Is Required")]
+    [MinLength(3, ErrorMessage = "Name must be 3 char at least")]
     public string LastName { get; set; }
     [Required]
     public string Email { get; set; }
+    [Required]
+    public string PhoneNumber { get; set; }
     [Required]
     public string Password { get; set; }
     [Compare("Password")]
@@ -22,7 +26,7 @@ public class RegisterUserModel
     public string? DriverLicenseNumber { get; set; }
     public DateTime? ExpirDate { get; set; }
 
-    // Other common properties
+    // Other common propertiess
     public string? ProfilePicture { get; set; }
     public string? Country { get; set; }
     public string? City { get; set; }

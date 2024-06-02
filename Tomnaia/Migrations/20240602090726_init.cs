@@ -62,19 +62,6 @@ namespace Tomnaia.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Rates",
                 columns: table => new
                 {
@@ -338,6 +325,47 @@ namespace Tomnaia.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SenderPassengerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SenderDriverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReceiverPassengerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReceiverDriverId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_Drivers_ReceiverDriverId",
+                        column: x => x.ReceiverDriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_Drivers_SenderDriverId",
+                        column: x => x.SenderDriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_Passengers_ReceiverPassengerId",
+                        column: x => x.ReceiverPassengerId,
+                        principalTable: "Passengers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_Passengers_SenderPassengerId",
+                        column: x => x.SenderPassengerId,
+                        principalTable: "Passengers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Rides",
                 columns: table => new
                 {
@@ -450,6 +478,26 @@ namespace Tomnaia.Migrations
                 name: "IX_Comments_UserId",
                 table: "Comments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_ReceiverDriverId",
+                table: "Messages",
+                column: "ReceiverDriverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_ReceiverPassengerId",
+                table: "Messages",
+                column: "ReceiverPassengerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_SenderDriverId",
+                table: "Messages",
+                column: "SenderDriverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_SenderPassengerId",
+                table: "Messages",
+                column: "SenderPassengerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_ReceiverId",

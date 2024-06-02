@@ -9,5 +9,6 @@
         public double? RateCount { get; set; }
         public double? Rate { get; set; }
         public string? ProfilePicture { get; set; }
+        public AccountType AccountType { get; set; }
     }
 }

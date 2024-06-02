@@ -57,6 +57,57 @@ namespace Tomnaia.Data
                 .HasForeignKey(r => r.DriverId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Entities.Message>(entity =>
+            {
+                entity.HasOne(m => m.SenderPassenger)
+                      .WithMany(p => p.SentMessages)
+                      .HasForeignKey(m => m.SenderPassengerId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(m => m.SenderDriver)
+                      .WithMany(d => d.SentMessages)
+                      .HasForeignKey(m => m.SenderDriverId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(m => m.ReceiverPassenger)
+                      .WithMany(p => p.ReceivedMessages)
+                      .HasForeignKey(m => m.ReceiverPassengerId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(m => m.ReceiverDriver)
+                      .WithMany(d => d.ReceivedMessages)
+                      .HasForeignKey(m => m.ReceiverDriverId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // Configure Passenger entity
+            modelBuilder.Entity<Passenger>(entity =>
+            {
+                entity.HasMany(p => p.SentMessages)
+                      .WithOne(m => m.SenderPassenger)
+                      .HasForeignKey(m => m.SenderPassengerId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(p => p.ReceivedMessages)
+                      .WithOne(m => m.ReceiverPassenger)
+                      .HasForeignKey(m => m.ReceiverPassengerId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // Configure Driver entity
+            modelBuilder.Entity<Driver>(entity =>
+            {
+                entity.HasMany(d => d.SentMessages)
+                      .WithOne(m => m.SenderDriver)
+                      .HasForeignKey(m => m.SenderDriverId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(d => d.ReceivedMessages)
+                      .WithOne(m => m.ReceiverDriver)
+                      .HasForeignKey(m => m.ReceiverDriverId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
             //    // Passenger configuration
             //    modelBuilder.Entity<Passenger>()
             //        .HasKey(p => p.PassengerId);
