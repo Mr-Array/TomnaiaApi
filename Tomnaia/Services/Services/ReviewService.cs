@@ -20,10 +20,18 @@ namespace Tomnaia.Services.Services
 
         public async Task<IEnumerable<ReviewDto>> GetReviewsAsync()
         {
-            var reviews = await _context.Reviews.Include(r => r.ReviewerId).ToListAsync();
+            var reviews = await _context.Reviews.Include(r => r.RideRequestId).ToListAsync();
             return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
         }
-
+        //public async Task<IEnumerable<ReviewDto>> GetReviewsAsync()
+        //{
+        //    var reviews = await _context.Reviews
+        //        .Include(r => r.Reviewer)    // Corrected include for Reviewer
+        //        .Include(r => r.Reviewee)    // Corrected include for Reviewee
+        //        .Include(r => r.RideRequestId) // Corrected include for RideRequest
+        //        .ToListAsync();
+        //    return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
+        //}
         public async Task<ReviewDto> GetReviewByIdAsync(string reviewId)
         {
             var review = await _context.Reviews.Include(r => r.ReviewerId).FirstOrDefaultAsync(r => r.ReviewId == reviewId);
@@ -33,6 +41,19 @@ namespace Tomnaia.Services.Services
             }
             return _mapper.Map<ReviewDto>(review);
         }
+        //public async Task<ReviewDto> GetReviewByIdAsync(string reviewId)
+        //{
+        //    var review = await _context.Reviews
+        //        .Include(r => r.Reviewer)    // Corrected include for Reviewer
+        //        .Include(r => r.Reviewee)    // Corrected include for Reviewee
+        //        .Include(r => r.RideRequestId) // Corrected include for RideRequest
+        //        .FirstOrDefaultAsync(r => r.ReviewId == reviewId);
+        //    if (review == null)
+        //    {
+        //        return null;
+        //    }
+        //    return _mapper.Map<ReviewDto>(review);
+        //}
 
         public async Task<ReviewDto> CreateReviewAsync(ReviewDto reviewDto)
         {

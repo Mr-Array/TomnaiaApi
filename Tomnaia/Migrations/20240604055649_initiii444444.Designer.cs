@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tomnaia.Data;
 
@@ -11,9 +12,11 @@ using Tomnaia.Data;
 namespace Tomnaia.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240604055649_initiii444444")]
+    partial class initiii444444
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -712,7 +715,7 @@ namespace Tomnaia.Migrations
                         .IsRequired();
 
                     b.HasOne("Tomnaia.Entities.Ride", "Rides")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("RideRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -779,11 +782,6 @@ namespace Tomnaia.Migrations
                         .HasForeignKey("Tomnaia.Entities.Passenger", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Tomnaia.Entities.Ride", b =>
-                {
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Driver", b =>

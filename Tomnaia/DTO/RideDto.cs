@@ -10,9 +10,10 @@
         public int Rider { get; set; }
         public double Fare { get; set; }
         public DateTime RequestTime { get; set; }
-        public string DriverId { get; set; }
-        public string DriverName { get; set; }
-        public int VehicleId { get; set; }
-        public string VehicleModel { get; set; }
+        //public string DriverId { get; set; }
+        //public string DriverName { get; set; }
+        public string VehicleId { get; set; }
+        public string PassengerId { get; set; }
+        ///public string VehicleModel { get; set; }
     }
 }

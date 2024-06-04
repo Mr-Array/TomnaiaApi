@@ -7,12 +7,9 @@ namespace Tomnaia.Entities
     {
         [Key]
         public string ReviewId { get; set; }
-        [Required]
-        public string ReviewerId { get; set; }
 
-        [Required]
-        public string RevieweeId { get; set; }
 
+     
         [Required]
         public string RideRequestId { get; set; }
         [Required]
@@ -28,12 +25,17 @@ namespace Tomnaia.Entities
       
 
         [ForeignKey(nameof(RideRequestId))]
-        public Ride Ride { get; set; }
+        public Ride Rides { get; set; }
 
         //[Required]
         //public string UserId { get; set; }
-
-        //[ForeignKey(nameof(UserId))]
-        //public User User { get; set; }
+        [Required]
+        public string ReviewerId { get; set; }
+        [ForeignKey(nameof(ReviewerId))]
+        public virtual Passenger Reviewer { get; set; }
+        [Required]
+        public string RevieweeId { get; set; }
+        [ForeignKey(nameof(RevieweeId))]
+        public virtual Driver Reviewee { get; set; }
     }
 }

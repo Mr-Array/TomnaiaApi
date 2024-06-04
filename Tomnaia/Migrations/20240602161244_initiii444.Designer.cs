@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tomnaia.Data;
 
@@ -11,9 +12,11 @@ using Tomnaia.Data;
 namespace Tomnaia.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240602161244_initiii444")]
+    partial class initiii444
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,21 +334,17 @@ namespace Tomnaia.Migrations
 
                     b.Property<string>("RevieweeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReviewerId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RideRequestId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ReviewId");
-
-                    b.HasIndex("RevieweeId");
-
-                    b.HasIndex("ReviewerId");
 
                     b.HasIndex("RideRequestId");
 
@@ -699,29 +698,13 @@ namespace Tomnaia.Migrations
 
             modelBuilder.Entity("Tomnaia.Entities.Review", b =>
                 {
-                    b.HasOne("Tomnaia.Entities.Driver", "Reviewee")
-                        .WithMany("Reviewee")
-                        .HasForeignKey("RevieweeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Tomnaia.Entities.Passenger", "Reviewer")
-                        .WithMany("Reviewer")
-                        .HasForeignKey("ReviewerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Tomnaia.Entities.Ride", "Rides")
-                        .WithMany("Reviews")
+                    b.HasOne("Tomnaia.Entities.Ride", "Ride")
+                        .WithMany()
                         .HasForeignKey("RideRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Reviewee");
-
-                    b.Navigation("Reviewer");
-
-                    b.Navigation("Rides");
+                    b.Navigation("Ride");
                 });
 
             modelBuilder.Entity("Tomnaia.Entities.Ride", b =>
@@ -781,18 +764,11 @@ namespace Tomnaia.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tomnaia.Entities.Ride", b =>
-                {
-                    b.Navigation("Reviews");
-                });
-
             modelBuilder.Entity("Tomnaia.Entities.Driver", b =>
                 {
                     b.Navigation("Notifications");
 
                     b.Navigation("ReceivedMessages");
-
-                    b.Navigation("Reviewee");
 
                     b.Navigation("SentMessages");
 
@@ -804,8 +780,6 @@ namespace Tomnaia.Migrations
                     b.Navigation("Notifications");
 
                     b.Navigation("ReceivedMessages");
-
-                    b.Navigation("Reviewer");
 
                     b.Navigation("SentMessages");
                 });

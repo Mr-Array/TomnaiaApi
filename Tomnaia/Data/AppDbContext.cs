@@ -50,6 +50,10 @@ namespace Tomnaia.Data
             //    .WithMany()
             //    .HasForeignKey(v => v.dri)
             //    .OnDelete(DeleteBehavior.NoAction);
+       //     modelBuilder.Entity<Ride>()
+       //.HasOne(r => r.VehicleId)
+       //.WithMany(p => p.)
+       //.HasForeignKey(r => r.PassengerId);
 
             modelBuilder.Entity<Driver>()
                 .HasMany(d => d.Vehicles)
@@ -92,6 +96,11 @@ namespace Tomnaia.Data
                       .WithOne(m => m.ReceiverPassenger)
                       .HasForeignKey(m => m.ReceiverPassengerId)
                       .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(p => p.Reviewer)
+            .WithOne(r => r.Reviewer)
+            .HasForeignKey(r => r.ReviewerId)
+            .OnDelete(DeleteBehavior.Restrict);
             });
 
             // Configure Driver entity
@@ -106,7 +115,29 @@ namespace Tomnaia.Data
                       .WithOne(m => m.ReceiverDriver)
                       .HasForeignKey(m => m.ReceiverDriverId)
                       .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(d => d.Reviewee)
+            .WithOne(r => r.Reviewee)
+            .HasForeignKey(r => r.RevieweeId)
+            .OnDelete(DeleteBehavior.Restrict);
             });
+
+            //modelBuilder.Entity<Driver>()
+            //.HasMany(d => d.Reviewee)
+            //.WithOne(r => r.Reviewee)
+            //.HasForeignKey(r => r.RevieweeId)
+            //.OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<Passenger>()
+            //.HasMany(p => p.Reviewer)
+            //.WithOne(r => r.Reviewer)
+            //.HasForeignKey(r => r.ReviewerId)
+            //.OnDelete(DeleteBehavior.Restrict);
+            // Configure other relationships similarly to avoid multiple cascade paths
+
+
+
+
 
             //    // Passenger configuration
             //    modelBuilder.Entity<Passenger>()
