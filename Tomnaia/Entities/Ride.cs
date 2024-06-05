@@ -38,7 +38,7 @@ namespace Tomnaia.Entities
         [ForeignKey(nameof(VehicleId))]
         public Vehicle Vehicle { get; set; }
 
-        //public ICollection<RidePassenger> RidePassengers { get; set; } = new List<RidePassenger>();
+      
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

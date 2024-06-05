@@ -22,7 +22,7 @@ namespace Tomnaia.Services.Services
         {
             var reviews = await _context.Reviews
                 
-               //.Include(r => r.)
+              
                 .Include(r => r.Rides)    // Include Vehicle navigation property
                                      .Include(r => r.Reviewer) // Include Passenger navigation property
                                       .Include(r => r.Reviewee) // Include Reviews navigation property
@@ -30,15 +30,7 @@ namespace Tomnaia.Services.Services
                                       .ToListAsync();
             return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
         }
-        //public async Task<IEnumerable<ReviewDto>> GetReviewsAsync()
-        //{
-        //    var reviews = await _context.Reviews
-        //        .Include(r => r.Reviewer)    // Corrected include for Reviewer
-        //        .Include(r => r.Reviewee)    // Corrected include for Reviewee
-        //        .Include(r => r.RideRequestId) // Corrected include for RideRequest
-        //        .ToListAsync();
-        //    return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
-        //}
+      
         public async Task<ReviewDto> GetReviewByIdAsync(string reviewId)
         {
             var review = await _context.Reviews.Include(r => r.Rides).FirstOrDefaultAsync(r => r.ReviewId == reviewId);
@@ -48,19 +40,7 @@ namespace Tomnaia.Services.Services
             }
             return _mapper.Map<ReviewDto>(review);
         }
-        //public async Task<ReviewDto> GetReviewByIdAsync(string reviewId)
-        //{
-        //    var review = await _context.Reviews
-        //        .Include(r => r.Reviewer)    // Corrected include for Reviewer
-        //        .Include(r => r.Reviewee)    // Corrected include for Reviewee
-        //        .Include(r => r.RideRequestId) // Corrected include for RideRequest
-        //        .FirstOrDefaultAsync(r => r.ReviewId == reviewId);
-        //    if (review == null)
-        //    {
-        //        return null;
-        //    }
-        //    return _mapper.Map<ReviewDto>(review);
-        //}
+       
 
         public async Task<ReviewDto> CreateReviewAsync(ReviewDto reviewDto)
         {

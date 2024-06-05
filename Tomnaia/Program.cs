@@ -100,7 +100,7 @@ namespace Tomnaia
             #region swagger
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tomnaia", Version = "v1" });
             });
             builder.Services.AddSwaggerGen(swagger =>
             {

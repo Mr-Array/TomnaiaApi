@@ -12,7 +12,6 @@ namespace Tomnaia.Interfaces
          Task<LoginResult> LoginAsync(LoginUser loginUser);
          Task<LogoutResult> LogoutAsync();
         Task<bool> ForgetPasswordAsync(string email);
-       // Task<IdentityResult> ResetPasswordAsync(ResetPassword resetPassword);
-      //  Task<IdentityResult> ChangePasswordAsync(ChangePassword changePassword);
+      
     }
 }

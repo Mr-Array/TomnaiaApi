@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Tomnaia.DTO;
 using Tomnaia.Interfaces;
@@ -24,7 +25,7 @@ namespace Tomnaia.Controllers
         public async Task<ActionResult<IEnumerable<VehicleDto>>> GetVehicles()
         {
             var vehicles = await _vehicleService.GetVehiclesAsync();
-            return Ok(vehicles);
+            return vehicles  != null ? Ok(vehicles) : BadRequest("user not found.");
         }
 
         // GET: api/vehicles/{id}
@@ -48,7 +49,7 @@ namespace Tomnaia.Controllers
         public async Task<ActionResult<IEnumerable<VehicleDto>>> GetVehiclesByDriver(string driverId)
         {
             var vehicles = await _vehicleService.GetVehiclesByDriverIdAsync(driverId);
-            return Ok(vehicles);
+            return vehicles != null ? Ok(vehicles) : BadRequest("user not found.");
         }
 
         // POST: api/vehicles

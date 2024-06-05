@@ -126,49 +126,6 @@ namespace Tomnaia.Controllers
             return Ok(new { model });
         }
         #endregion
-        //[HttpPost("reset-password")]
-        //    public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPassword resetPassword)
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return BadRequest(ModelState);
-        //        }
-
-        //        var resetPasswordResult = await _authService.ResetPasswordAsync(resetPassword);
-        //        if (!resetPasswordResult.Succeeded)
-        //        {
-        //            foreach (var error in resetPasswordResult.Errors)
-        //                ModelState.AddModelError(error.Code, error.Description);
-
-        //            return BadRequest(ModelState);
-        //        }
-
-        //        return Ok("Password reset successfully");
-
-        //    }
-
-        //    [Authorize]
-        //    [HttpPost("change-password")]
-        //    public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePassword changePassword)
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return BadRequest(ModelState);
-        //        }
-        //        var changePasswordResult = await _authService.ChangePasswordAsync(changePassword);
-        //        if (!changePasswordResult.Succeeded)
-        //        {
-        //            foreach (var error in changePasswordResult.Errors)
-        //            {
-        //                ModelState.AddModelError(error.Code, error.Description);
-        //            }
-
-        //            return BadRequest(ModelState);
-        //        }
-
-        //        return Ok("Password changed successfully");
-        //    }
-        //    #endregion
-        //}
+        
     }
 }

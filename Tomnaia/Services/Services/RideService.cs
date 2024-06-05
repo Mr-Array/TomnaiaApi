@@ -21,19 +21,11 @@ namespace Tomnaia.Services.Services
         public async Task<IEnumerable<RideDto>> GetRidesAsync()
         {
             var rides = await _context.Rides
-                                     // .Include(r => r.Rider)    // Include Rider navigation property
                                       .Include(r => r.Passenger) // Include Passenger navigation property
                                       .Include(r => r.Vehicle)
-                                      //.Include(r => r.PickupLocation)
-                                     // .Include(r => r.RequestTime)
-                                     //// .Include(r => r.DropoffLocation)
+                                    
                                       .Include(r => r.Reviews)
-                                      //.Include(r => r.RideId)
-                                      //.Include(r => r.PassengerId)
-                                      //.Include(r => r.Fare)
-                                      //.Include(r => r.VehicleId)
-                                      //.Include(r => r.StartTime)
-                                      //.Include(r => r.EndTime)
+                                   
                                       
                                       .ToListAsync();
             return _mapper.Map<IEnumerable<RideDto>>(rides);
