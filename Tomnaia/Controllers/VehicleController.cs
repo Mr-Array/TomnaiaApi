@@ -60,7 +60,8 @@ namespace Tomnaia.Controllers
         public async Task<ActionResult<VehicleAddDto>> CreateVehicle(VehicleAddDto vehicleAddDto)
         {
             var vehicle = await _vehicleService.CreateVehicleAsync(vehicleAddDto);
-            return CreatedAtAction(nameof(GetVehicle), new {  }, vehicle);
+            // return CreatedAtAction(nameof(GetVehicle), new {  }, vehicle);
+            return Ok("Vehicle Add successfully.");
         }
 
         // PUT: api/vehicles/{id}

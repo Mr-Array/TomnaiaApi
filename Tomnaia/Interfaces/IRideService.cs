@@ -6,8 +6,8 @@ namespace Tomnaia.Interfaces
     {
         Task<IEnumerable<RideDto>> GetRidesAsync();
         Task<RideDto> GetRideByIdAsync(string rideId);
-        Task<RideDto> CreateRideAsync(RideDto rideDto);
-        Task<bool> UpdateRideAsync(RideDto rideDto);
+        Task<RideAddDto> CreateRideAsync(RideAddDto rideAddDto);
+        Task<bool> UpdateRideAsync(string rideId , RideUpdateDto rideUpdateDto);
         Task<bool> DeleteRideAsync(string rideId);
         Task<IEnumerable<RideDto>> GetRidesByDriverIdAsync(string driverId);
     }

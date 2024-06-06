@@ -45,23 +45,23 @@ namespace Tomnaia.Services.Services
             return _mapper.Map<RideDto>(ride);
         }
 
-        public async Task<RideDto> CreateRideAsync(RideDto rideDto)
+        public async Task<RideAddDto> CreateRideAsync(RideAddDto rideAddDto)
         {
-            var ride = _mapper.Map<Ride>(rideDto);
+            var ride = _mapper.Map<Ride>(rideAddDto);
             _context.Rides.Add(ride);
             await _context.SaveChangesAsync();
-            return _mapper.Map<RideDto>(ride);
+            return _mapper.Map<RideAddDto>(ride);
         }
 
-        public async Task<bool> UpdateRideAsync(RideDto rideDto)
+        public async Task<bool> UpdateRideAsync(string rideId, RideUpdateDto rideUpdateDto)
         {
-            var ride = await _context.Rides.FindAsync(rideDto.RideId);
+            var ride = await _context.Rides.FindAsync(rideId);
             if (ride == null)
             {
                 return false;
             }
 
-            _mapper.Map(rideDto, ride);
+            _mapper.Map(rideUpdateDto, ride);
             _context.Rides.Update(ride);
             await _context.SaveChangesAsync();
             return true;

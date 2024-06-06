@@ -45,7 +45,8 @@ namespace Tomnaia.Controllers
         public async Task<ActionResult<ReviewDto>> CreateReview(ReviewAddDto reviewAddDto)
         {
             var review = await _reviewService.CreateReviewAsync(reviewAddDto);
-            return CreatedAtAction(nameof(GetReview), new { }, review);
+            // return CreatedAtAction(nameof(GetReview), new { }, review);
+            return Ok("Review Add successfully.");
         }
 
         // PUT: api/reviews/5

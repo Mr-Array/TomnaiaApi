@@ -57,30 +57,30 @@ namespace Tomnaia.Controllers
         [Authorize]
 
         [HttpPost("CreateRide")]
-        public async Task<ActionResult<RideDto>> CreateRide(RideDto rideDto)
+        public async Task<ActionResult<RideDto>> CreateRide(RideAddDto rideAddDto)
         {
-            var ride = await _rideService.CreateRideAsync(rideDto);
-            return CreatedAtAction(nameof(GetRide), new { id = ride.RideId }, ride);
+            var ride = await _rideService.CreateRideAsync(rideAddDto);
+              return Ok("Ride Add successfully.");
         }
 
         // PUT: api/rides/{id}
         [Authorize]
 
         [HttpPut("UpdateRide{id}")]
-        public async Task<IActionResult> UpdateRide(string id, RideDto rideDto)
+        public async Task<IActionResult> UpdateRide(string id, RideUpdateDto rideUpdateDto)
         {
-            if (id != rideDto.RideId)
+            if (rideUpdateDto == null)
             {
-                return BadRequest();
+                return BadRequest("Review data is null.");
             }
 
-            var result = await _rideService.UpdateRideAsync(rideDto);
+            var result = await _rideService.UpdateRideAsync(id , rideUpdateDto);
             if (!result)
             {
-                return NotFound();
+                return NotFound("Ride not found.");
             }
 
-            return NoContent();
+            return Ok("Ride updated successfully.");
         }
 
         // DELETE: api/rides/{id}
@@ -92,10 +92,10 @@ namespace Tomnaia.Controllers
             var result = await _rideService.DeleteRideAsync(id);
             if (!result)
             {
-                return NotFound();
+                return NotFound("Ride not found.");
             }
 
-            return NoContent();
+            return Ok("Ride deleted successfully.");
         }
     }
 }
