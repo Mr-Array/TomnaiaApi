@@ -65,21 +65,21 @@ namespace Tomnaia.Controllers
         // PUT: api/vehicles/{id}
         [Authorize]
 
-        [HttpPut("UpdateVehicle{id}")]
-        public async Task<IActionResult> UpdateVehicle(string id, VehicleDto vehicleDto)
+        [HttpPut("UpdateVehicle")]
+        public async Task<IActionResult> UpdateVehicle(string vehicleId, VehicleUpdateDto vehicleUpdateDto)
         {
-            if (id != vehicleDto.VehicleId)
+            if (vehicleUpdateDto == null)
             {
-                return BadRequest();
+                return BadRequest("Vehicle data is null.");
             }
 
-            var result = await _vehicleService.UpdateVehicleAsync(vehicleDto);
+            var result = await _vehicleService.UpdateVehicleAsync(vehicleId, vehicleUpdateDto);
             if (!result)
             {
-                return NotFound();
+                return NotFound("Vehicle not found.");
             }
 
-            return NoContent();
+            return Ok("Vehicle updated successfully.");
         }
 
         // DELETE: api/vehicles/{id}
@@ -91,10 +91,10 @@ namespace Tomnaia.Controllers
             var result = await _vehicleService.DeleteVehicleAsync(id);
             if (!result)
             {
-                return NotFound();
+                return NotFound("Vehicle not found.");
             }
 
-            return NoContent();
+            return Ok("Vehicle deleted successfully.");
         }
     }
 }

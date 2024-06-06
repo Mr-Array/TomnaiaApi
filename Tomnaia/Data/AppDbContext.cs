@@ -102,7 +102,11 @@ namespace Tomnaia.Data
             .OnDelete(DeleteBehavior.Restrict);
             });
 
-           
+            modelBuilder.Entity<Vehicle>(entity =>
+            {
+                entity.HasKey(e => e.VehicleId);
+                entity.Property(e => e.VehicleId).ValueGeneratedOnAdd();
+            });
 
             SeedRoles(modelBuilder);
 

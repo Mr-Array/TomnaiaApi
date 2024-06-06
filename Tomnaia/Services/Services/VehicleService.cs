@@ -42,15 +42,15 @@ namespace Tomnaia.Services.Services
             return _mapper.Map<VehicleDto>(vehicle);
         }
 
-        public async Task<bool> UpdateVehicleAsync(VehicleDto vehicleDto)
+        public async Task<bool> UpdateVehicleAsync(string vehicleId, VehicleUpdateDto vehicleUpdateDto)
         {
-            var vehicle = await _context.Vehicles.FindAsync(vehicleDto.VehicleId);
+            var vehicle = await _context.Vehicles.FindAsync(vehicleId);
             if (vehicle == null)
             {
                 return false;
             }
 
-            _mapper.Map(vehicleDto, vehicle);
+            _mapper.Map(vehicleUpdateDto, vehicle);
             _context.Vehicles.Update(vehicle);
             await _context.SaveChangesAsync();
             return true;
