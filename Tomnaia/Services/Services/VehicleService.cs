@@ -34,12 +34,12 @@ namespace Tomnaia.Services.Services
             return _mapper.Map<VehicleDto>(vehicle);
         }
 
-        public async Task<VehicleDto> CreateVehicleAsync(VehicleDto vehicleDto)
+        public async Task<VehicleAddDto> CreateVehicleAsync(VehicleAddDto vehicleAddDto)
         {
-            var vehicle = _mapper.Map<Vehicle>(vehicleDto);
+            var vehicle = _mapper.Map<Vehicle>(vehicleAddDto);
             _context.Vehicles.Add(vehicle);
             await _context.SaveChangesAsync();
-            return _mapper.Map<VehicleDto>(vehicle);
+            return _mapper.Map<VehicleAddDto>(vehicle);
         }
 
         public async Task<bool> UpdateVehicleAsync(string vehicleId, VehicleUpdateDto vehicleUpdateDto)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Tomnaia.DTO;
+using Tomnaia.Entities;
 using Tomnaia.Interfaces;
 
 namespace Tomnaia.Controllers
@@ -25,7 +26,7 @@ namespace Tomnaia.Controllers
         public async Task<ActionResult<IEnumerable<VehicleDto>>> GetVehicles()
         {
             var vehicles = await _vehicleService.GetVehiclesAsync();
-            return vehicles  != null ? Ok(vehicles) : BadRequest("user not found.");
+            return vehicles  != null ? Ok(vehicles) : BadRequest("Vehicle not found.");
         }
 
         // GET: api/vehicles/{id}
@@ -37,7 +38,7 @@ namespace Tomnaia.Controllers
             var vehicle = await _vehicleService.GetVehicleByIdAsync(id);
             if (vehicle == null)
             {
-                return NotFound();
+                return NotFound("Vehicle not found.");
             }
             return Ok(vehicle);
         }
@@ -56,10 +57,10 @@ namespace Tomnaia.Controllers
         [Authorize]
 
         [HttpPost("CreateVehicle")]
-        public async Task<ActionResult<VehicleDto>> CreateVehicle(VehicleDto vehicleDto)
+        public async Task<ActionResult<VehicleAddDto>> CreateVehicle(VehicleAddDto vehicleAddDto)
         {
-            var vehicle = await _vehicleService.CreateVehicleAsync(vehicleDto);
-            return CreatedAtAction(nameof(GetVehicle), new { id = vehicle.VehicleId }, vehicle);
+            var vehicle = await _vehicleService.CreateVehicleAsync(vehicleAddDto);
+            return CreatedAtAction(nameof(GetVehicle), new {  }, vehicle);
         }
 
         // PUT: api/vehicles/{id}

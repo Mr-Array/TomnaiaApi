@@ -34,7 +34,7 @@ namespace Tomnaia.Controllers
             var review = await _reviewService.GetReviewByIdAsync(id);
             if (review == null)
             {
-                return NotFound();
+                return NotFound("Review not found.");
             }
             return Ok(review);
         }
@@ -75,10 +75,10 @@ namespace Tomnaia.Controllers
             var result = await _reviewService.DeleteReviewAsync(id);
             if (!result)
             {
-                return NotFound();
+                return NotFound("Review not found.");
             }
 
-            return NoContent();
+            return Ok("Review deleted successfully.");
         }
     }
 }
