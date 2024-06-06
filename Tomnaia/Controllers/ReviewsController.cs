@@ -42,29 +42,29 @@ namespace Tomnaia.Controllers
         // POST: api/reviews
         [Authorize]
         [HttpPost("CreateReview")]
-        public async Task<ActionResult<ReviewDto>> CreateReview(ReviewDto reviewDto)
+        public async Task<ActionResult<ReviewDto>> CreateReview(ReviewAddDto reviewAddDto)
         {
-            var review = await _reviewService.CreateReviewAsync(reviewDto);
-            return CreatedAtAction(nameof(GetReview), new { id = review.ReviewId }, review);
+            var review = await _reviewService.CreateReviewAsync(reviewAddDto);
+            return CreatedAtAction(nameof(GetReview), new { }, review);
         }
 
         // PUT: api/reviews/5
         [Authorize]
         [HttpPut("UpdateReview{id}")]
-        public async Task<IActionResult> UpdateReview(string id, ReviewDto reviewDto)
+        public async Task<IActionResult> UpdateReview(string id, ReviewUpdateDto reviewUpdateDto)
         {
-            if (id != reviewDto.ReviewId)
+            if (reviewUpdateDto == null)
             {
-                return BadRequest();
+                return BadRequest("Review data is null.");
             }
 
-            var result = await _reviewService.UpdateReviewAsync(reviewDto);
+            var result = await _reviewService.UpdateReviewAsync(id , reviewUpdateDto);
             if (!result)
             {
-                return NotFound();
+                return NotFound("Review not found.");
             }
 
-            return NoContent();
+            return Ok("Review updated successfully.");
         }
 
         // DELETE: api/reviews/5

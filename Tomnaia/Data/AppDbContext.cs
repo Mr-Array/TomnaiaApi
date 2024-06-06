@@ -107,7 +107,11 @@ namespace Tomnaia.Data
                 entity.HasKey(e => e.VehicleId);
                 entity.Property(e => e.VehicleId).ValueGeneratedOnAdd();
             });
-
+            modelBuilder.Entity<Review>(entity =>
+            {
+                entity.HasKey(e => e.ReviewId);
+                entity.Property(e => e.ReviewId).ValueGeneratedOnAdd();
+            });
             SeedRoles(modelBuilder);
 
         }

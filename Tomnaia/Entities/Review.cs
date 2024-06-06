@@ -7,8 +7,6 @@ namespace Tomnaia.Entities
     {
         [Key]
         public string ReviewId { get; set; }
-
-
      
         [Required]
         public string RideRequestId { get; set; }
@@ -22,13 +20,9 @@ namespace Tomnaia.Entities
         [Required]
         public DateTime Date { get; set; }
 
-      
-
         [ForeignKey(nameof(RideRequestId))]
         public Ride Rides { get; set; }
 
-        //[Required]
-        //public string UserId { get; set; }
         [Required]
         public string ReviewerId { get; set; }
         [ForeignKey(nameof(ReviewerId))]

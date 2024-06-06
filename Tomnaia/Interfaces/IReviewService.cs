@@ -6,8 +6,8 @@ namespace Tomnaia.Interfaces
     {
         Task<IEnumerable<ReviewDto>> GetReviewsAsync();
         Task<ReviewDto> GetReviewByIdAsync(string reviewId);
-        Task<ReviewDto> CreateReviewAsync(ReviewDto reviewDto);
-        Task<bool> UpdateReviewAsync(ReviewDto reviewDto);
+        Task<ReviewAddDto> CreateReviewAsync(ReviewAddDto reviewAddDto);
+        Task<bool> UpdateReviewAsync(string reviewId ,ReviewUpdateDto reviewUpdateDto);
         Task<bool> DeleteReviewAsync(string reviewId);
     }
 }

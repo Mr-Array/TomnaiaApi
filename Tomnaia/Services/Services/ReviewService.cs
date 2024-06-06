@@ -42,23 +42,23 @@ namespace Tomnaia.Services.Services
         }
        
 
-        public async Task<ReviewDto> CreateReviewAsync(ReviewDto reviewDto)
+        public async Task<ReviewAddDto> CreateReviewAsync(ReviewAddDto reviewAddDto)
         {
-            var review = _mapper.Map<Review>(reviewDto);
+            var review = _mapper.Map<Review>(reviewAddDto);
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
-            return _mapper.Map<ReviewDto>(review);
+            return _mapper.Map<ReviewAddDto>(review);
         }
 
-        public async Task<bool> UpdateReviewAsync(ReviewDto reviewDto)
+        public async Task<bool> UpdateReviewAsync(string reviewId , ReviewUpdateDto reviewUpdateDto)
         {
-            var review = await _context.Reviews.FindAsync(reviewDto.ReviewId);
+            var review = await _context.Reviews.FindAsync(reviewId);
             if (review == null)
             {
                 return false;
             }
 
-            _mapper.Map(reviewDto, review);
+            _mapper.Map(reviewUpdateDto, review);
             _context.Reviews.Update(review);
             await _context.SaveChangesAsync();
             return true;
