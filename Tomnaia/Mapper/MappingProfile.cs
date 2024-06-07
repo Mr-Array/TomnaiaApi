@@ -22,11 +22,13 @@ namespace Tomnaia.Mapper
             CreateMap<Ride, RideDto>();
             CreateMap<RideDto, Ride>();
             CreateMap<RideUpdateDto, Ride>().ReverseMap();
+            CreateMap<RideOfferDTO, RideOffer>().ReverseMap();
+            CreateMap<RideOfferDTO, Ride>().ReverseMap();
             CreateMap<RideAddDto, Ride>().ReverseMap();
             CreateMap<ReviewAddDto, Review>().ReverseMap();
             CreateMap<ReviewUpdateDto, Review>().ReverseMap();
             CreateMap<ReviewDto, Review>().ReverseMap();
-            //CreateMap<AdminstratorDTO, User>().ReverseMap();
+            CreateMap<RideOfferUpdateDto, RideOffer>().ReverseMap();
 
             CreateMap<UserResultDto, User>().ReverseMap();
             CreateMap<AdminstratorDTO, User>().ReverseMap();

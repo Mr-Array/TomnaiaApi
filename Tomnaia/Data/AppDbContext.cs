@@ -20,6 +20,7 @@ namespace Tomnaia.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Rate> Rates { get; set; }
         public DbSet<Ride> Rides { get; set; }
+        public DbSet<RideOffer> RideOffers { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
          public DbSet<Entities.Message> Messages { get; set; }
@@ -116,6 +117,17 @@ namespace Tomnaia.Data
             {
                 entity.HasKey(e => e.RideId);
                 entity.Property(e => e.RideId).ValueGeneratedOnAdd();
+            });
+            modelBuilder.Entity<RideOffer>(entity =>
+            {
+                entity.HasKey(e => e.RideOfferId);
+                entity.Property(e => e.RideOfferId).ValueGeneratedOnAdd();
+
+                entity.HasOne(ro => ro.RideRequest)
+            .WithMany()
+            .HasForeignKey(ro => ro.RideRequestId)
+            .OnDelete(DeleteBehavior.Restrict);
+
             });
             SeedRoles(modelBuilder);
 

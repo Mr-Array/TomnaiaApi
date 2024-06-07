@@ -82,6 +82,7 @@ namespace Tomnaia
             builder.Services.AddTransient<IAuthService, AuthService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IRideService, RideService>();
+            builder.Services.AddScoped<IRideOfferService, RideOfferService>();
             builder.Services.AddTransient<IRateService, RateService>();
             builder.Services.AddScoped<IVehicleService, VehicleService>();
             builder.Services.AddTransient<IMessageService, MessageService>();

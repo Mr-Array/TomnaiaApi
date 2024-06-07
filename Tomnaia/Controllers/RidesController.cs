@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tomnaia.DTO;
+using Tomnaia.Entities;
 using Tomnaia.Interfaces;
 using Tomnaia.Mapper;
 using Tomnaia.Services.Services;
@@ -26,6 +27,10 @@ namespace Tomnaia.Controllers
         public async Task<ActionResult<IEnumerable<RideDto>>> GetRides()
         {
             var rides = await _rideService.GetRidesAsync();
+            if (rides == null)
+            {
+                return NotFound("Ride not found.");
+            }
             return Ok(rides);
         }
 
@@ -38,7 +43,7 @@ namespace Tomnaia.Controllers
             var ride = await _rideService.GetRideByIdAsync(id);
             if (ride == null)
             {
-                return NotFound();
+                return NotFound("Ride not found.");
             }
             return Ok(ride);
         }
@@ -47,9 +52,13 @@ namespace Tomnaia.Controllers
         [Authorize]
 
         [HttpGet("driver/{driverId}")]
-        public async Task<ActionResult<IEnumerable<RideDto>>> GetRidesByDriver(string driverId)
+        public async Task<ActionResult<IEnumerable<RideDto>>> GetRidesByPassenger(string driverId)
         {
             var rides = await _rideService.GetRidesByDriverIdAsync(driverId);
+            if (rides == null)
+            {
+                return NotFound("Ride Passenger not found.");
+            }
             return Ok(rides);
         }
 
@@ -71,7 +80,7 @@ namespace Tomnaia.Controllers
         {
             if (rideUpdateDto == null)
             {
-                return BadRequest("Review data is null.");
+                return BadRequest("Ride data is null.");
             }
 
             var result = await _rideService.UpdateRideAsync(id , rideUpdateDto);
